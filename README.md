@@ -33,6 +33,25 @@ Note, if you already run MagicMirror in a container, even if you have lol_dht22 
  - Install [lol_dht22](https://github.com/technion/lol_dht22)
 
 # MMM-loldht22 configuration
+```
+{
+      module: 'MMM-loldht22',
+      position: 'top_right',
+      config: {
+        sensorLocation: "Living room",
+        showLocation: true,
+        updateInterval: 10, //in minutes
+        animationSpeed: 1000,
+        scriptPath: "/tmp/lol_dht22/loldht",
+        gpioPin: 7,
+        vertical: false, //horizontal vs. vertical layout
+        iconTemp: '<i class="fas fa-thermometer-half"></i>', //fontawesome HTML tag
+        iconHum: '<i class="fas fa-tint"></i>', //fontawesome HTML tag
+        iconHome: '<i class="fas fa-house-user"></i>' //fontawesome HTML tag
+      }
+   },
+```
+
 | Option |  Description | 
 |---|---|
 |sensorLocation| Indicate where the sensor is deployed. Default: `Living room` |
@@ -47,3 +66,7 @@ Note, if you already run MagicMirror in a container, even if you have lol_dht22 
 |iconHome|: Location icon. Change default icons if you want by fontawesome. Default `<i class="fas fa-house-user"></i>`|
 
 
+| Layout |  View | 
+|---|---|
+|horizontal| |
+|vertical| |
