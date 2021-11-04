@@ -1,0 +1,41 @@
+.MMM-loldht22 .title {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+p {
+  line-height: 10px;  
+  margin: 10px 0;
+}
+
+
+/* table {
+  text-align:left;
+} */
+td.header_icon{
+  text-align:left;
+}
+td.header_text{
+  text-align:right;
+}
+th {
+  text-align:right;
+}
+td.text {
+  padding-right:2px;
+  text-align:left;
+}
+td.icon {
+  padding-right:0px;
+  text-align:left;
+  /* color:brown; */
+}
+
+.MMM-loldht22 .key {
+	/*font-weight: bold;*/
+}
+
+.MMM-loldht22 .value {
+    /*font-style: italic;*/
+}
+
