@@ -68,5 +68,5 @@ Note, if you already run MagicMirror in a container, even if you have lol_dht22 
 
 | Layout |  View | 
 |---|---|
-|horizontal|<img width="325" alt="Horizontal layout" src="https://github.com/cslev/MMM-loldht22/blob/master/horizontal.png"/> |
-|vertical| <img width="325" alt="Vertical layout" src="https://github.com/cslev/MMM-loldht22/blob/master/horizontal.png"/>|
+|vertical|<img width="325" alt="Horizontal layout" src="https://github.com/cslev/MMM-loldht22/blob/main/vertical.png"/> |
+|horizontal| <img width="325" alt="Vertical layout" src="https://github.com/cslev/MMM-loldht22/blob/main/horizontal.png"/>|
