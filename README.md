@@ -45,9 +45,22 @@ Note, if you already run MagicMirror in a container, even if you have lol_dht22 
         scriptPath: "/tmp/lol_dht22/loldht",
         gpioPin: 7,
         vertical: false, //horizontal vs. vertical layout
-        iconTemp: '<i class="fas fa-thermometer-half"></i>', //fontawesome HTML tag
-        iconHum: '<i class="fas fa-tint"></i>', //fontawesome HTML tag
+        highTempIcon: '<i class="fas fa-thermometer-three-quarters"></i>',
+        mediumTempIcon: '<i class="fas fa-thermometer-half"></i>',
+        lowTempIcon: '<i class="fas fa-thermometer-quarter"></i>',
+        freezeTempIcon: '<i class="fas fa-thermometer-empty"></i>',
+        iconHum: '<i class="fas fa-tint"></i>', //fontawesome HTML tag - iconTemp cannot be changed, it's a thermometer
+        humColor: '#365fbf', //only if colored is true
         iconHome: '<i class="fas fa-house-user"></i>', //fontawesome HTML tag
+        colored: false, //Colored icons
+        highTempStartsAt: 28, //three-quarter thermometer logo
+        highColor: '#ec1515', //only if colored is true
+        mediumTempStartsAt: 24, // half thermometer logo
+        mediumColor: '#e8b928', //only if colored is true
+        lowTempStartsAt: 16, // quarter thermometer logo
+        lowColor: '#0fd257', //only if colored is true
+        freezeTempStartsAt: 0, //empty thermometer logo
+        freezeColor: '#0f99d2', //only if colored is true
         fontSize: '50px',
         iconSize: '50px',
         headerFontSize: '22px',
@@ -66,7 +79,18 @@ Note, if you already run MagicMirror in a container, even if you have lol_dht22 
 |scriptPath| Where the loldht binary is located. Default `/tmp/lol_dht22/loldht`|
 |gpioPin | GPIO pin the DHT22 sensor is connected to. Default `7`|
 |vertical| Horizontal or vertical layout. Default `true`|
-|iconTemp| Temp icon. Change default icons if you want by fontawesome. Default `<i class="fas fa-thermometer-half"></i>`|
+|highTempIcon| Temp icon if temperature is HIGH. HIGH is defined via `highTempStartsAt`. Change default icons if you want by fontawesome. Default `<i class="fas fa-thermometer-three-quarters"></i>`|
+|mediumTempIcon| Temp icon if temperature is MEDIUM. MEDIUM is defined via `mediumTempStartsAt`.Change default icons if you want by fontawesome. Default `<i class="fas fa-thermometer-half"></i>`|
+|lowTempIcon| Temp icon if temperature is LOW. LOW is defined via `lowTempStartsAt`.Change default icons if you want by fontawesome. Default `<i class="fas fa-thermometer-quarters"></i>`|
+|freezeTempIcon| Temp icon if temperature is FREEZE. FREEZE is defined via `freezeTempStartsAt`.Change default icons if you want by fontawesome. Default `<i class="fas fa-thermometer-empty"></i>`|
+|highTempStartsAt| Define the temperature when it is considered HIGH. Default `28`|
+|mediumTempStartsAt| Define the temperature when it is considered MEDIUM. Default `24`|
+|lowTempStartsAt| Define the temperature when it is considered LOW. Default `16`|
+|freezeTempStartsAt| Define the temperature when it is considered FREEZE. Default `0`|
+|highColor| Define the color (in mode `colored:true`) when temperature is considered HIGH. Default `#ec1515`|
+|mediumColor| Define the color (in mode `colored:true`) when temperature is considered MEDIUM. Default `#e8b928`|
+|lowColor| Define the color (in mode `colored:true`) when temperature is considered LOW. Default `#0fd257`|
+|freezeColor| Define the color (in mode `colored:true`) when temperature is considered FREEZE. Default `#0f99d2`|
 |iconHum| Humidity icon. Change default icons if you want by fontawesome. Default `<i class="fas fa-tint"></i>`|
 |iconHome|: Location icon. Change default icons if you want by fontawesome. Default `<i class="fas fa-house-user"></i>`|
 |fontSize|: Granular CSS setting for the font sizes of humidity and temperature. Default `20px`|
@@ -76,8 +100,8 @@ Note, if you already run MagicMirror in a container, even if you have lol_dht22 
 |rowPadding|: Granular CSS setting for the row padding when layout is vertical. Default `10px`|
 
 
-
 | Layout |  View | 
 |---|---|
 |vertical|<img width="325" alt="Horizontal layout" src="https://github.com/cslev/MMM-loldht22/blob/main/vertical.png"/> |
 |horizontal| <img width="325" alt="Vertical layout" src="https://github.com/cslev/MMM-loldht22/blob/main/horizontal.png"/>|
+|vertical colorized with big fonts| <img width="325" alt="Vertical layout" src="https://github.com/cslev/MMM-loldht22/blob/main/colorized_vertical_big.png"/>|

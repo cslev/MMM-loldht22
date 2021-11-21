@@ -10,19 +10,36 @@ Module.register("MMM-loldht22",
         scriptPath: "./loldht22",
         gpioPin: 7,
         vertical: false, 
-        iconTemp: '<i class="fas fa-thermometer-half"></i>', //fontawesome HTML tag
+        highTempIcon: '<i class="fas fa-thermometer-three-quarters"></i>',
+        mediumTempIcon: '<i class="fas fa-thermometer-half"></i>',
+        lowTempIcon: '<i class="fas fa-thermometer-quarter"></i>',
+        freezeTempIcon: '<i class="fas fa-thermometer-empty"></i>',
         iconHum: '<i class="fas fa-tint"></i>', //fontawesome HTML tag
+        humColor: '#365fbf',
         iconHome: '<i class="fas fa-house-user"></i>', //fontawesome HTML tag
+        colored: false,
+        highTempStartsAt: 28,
+        highColor: '#ec1515', //only if colored is true
+        mediumTempStartsAt: 24,
+        mediumColor: '#e8b928', //only if colored is true
+        lowTempStartsAt: 16,
+        lowColor: '#0fd257', //only if colored is true
+        freezeTempStartsAt: 0,
+        freezeColor: '#0f99d2', //only if colored is true
         fontSize: '20px',
         iconSize: '20px',
         headerFontSize: '18px',
         headerIconSize: '18px',
         rowPadding: '10px' //only makes sense if vertical is true
     },
+    
+
+
     mylog: function(text)
     {
         Log.info("["+this.app_name+"]  "+text);
     },
+
     //This function will be executed when your module is loaded successfully.
     start: function () 
     {
@@ -30,7 +47,7 @@ Module.register("MMM-loldht22",
         this.loaded = false;
         this.humidity = "reading...";
         this.temp = "reading...";
-        this.adjustedUpdateInterval=this.config.updateInterval*60*1000;
+        this.adjustedUpdateInterval=this.config.updateInterval*60*1000;        
     },
 
     //to get font-awesome icons
@@ -58,22 +75,92 @@ Module.register("MMM-loldht22",
         //create table for the elements
         var table = document.createElement('table');
         table.classList.add("small", "table");
+        
+        //check temperature and colors
+        //@TODO: make this better, too many if statements...dictionary would be nicer or something more efficient. At least for the colors...
+        //set humidity icon to non colored one
+        var iconHum = this.config.iconHum ;//change the color later if colorized is true
+        var iconTemp = this.config.freezeTempIcon;
+        var temp = parseInt(this.temp); //create a variable for this.temp to convert it to int only once
+        var tempColor = "#abbabb";
+        var humColor = "#abbabb";
+        if(this.temp != "reading...") //initially, the value is NaN, so don't do the lot of checks below
+        {
+            if(temp > parseInt(this.config.freezeTempStartsAt))
+            {
+                iconTemp = this.config.freezeTempIcon;
+                this.mylog("temperature is Freezing -->" + temp);
+                if(this.config.colored)
+                {
+                    // iconTemp = this.freezeTempIconColored
+                    tempColor = this.config.freezeColor;
+                    humColor = this.config.humColor;
+                    //we use this if statement to colorize humidity icon to spare one more if :D
+                    // iconHum = '<span style="color: '+this.config.humColor+'">'+this.config.iconHum+"</span>"
+                    
+                }
+                if(temp > parseInt(this.config.lowTempStartsAt))
+                {
+                    iconTemp = this.config.lowTempIcon;
+                    this.mylog("temperature is Low -->" + temp);
+                    if(this.config.colored)
+                    {
+                        // iconTemp = this.lowTempIconColored
+                        tempColor=this.config.lowColor;
+                    }
+
+                    if(temp > parseInt(this.config.mediumTempStartsAt))
+                    {
+                        iconTemp = this.config.mediumTempIcon;
+                        this.mylog("temperature is Medium -->" + temp);
+                        if(this.config.colored)
+                        {
+                            // iconTemp = this.mediumTempIconColored
+                            tempColor = this.config.mediumColor;
+                        }
+
+                        if(temp > parseInt(this.config.highTempStartsAt))
+                        {
+                            iconTemp = this.config.highTempIcon;
+                            this.mylog("temperature is HIGH -->" + temp);
+                            if(this.config.colored)
+                            {
+                             //   iconTemp = this.highTempIconColored
+                             tempColor=this.config.highColor;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // this.mylog("high color" + this.config.highColor)
+        // this.mylog("medium color" + this.config.mediumColor)
+        // this.mylog("low color" + this.config.lowColor)
+        // this.mylog("freeze color" + this.config.freezeColor)
+
+        // this.mylog("iconTemp" + iconTemp)
+
+        // this.mylog("iconHum" + iconHum)
+
+
         if(this.config.vertical)
         {
-            table.innerHTML = "<tr>" +
-							"<td class='icon' style='font-size: "+this.config.iconSize+";text-align:left;padding-bottom:"+this.config.rowPadding+"'>" + this.config.iconTemp + "</td>" +
-							"<td class='text' style='font-size: "+this.config.fontSize+";text-align:right;padding-bottom:"+this.config.rowPadding+"'>" + this.temp + "</td></tr></tr>" + 
-                            "<td class='icon' style='font-size: "+this.config.iconSize+";text-align:left;padding-bottom:"+this.config.rowPadding+"'>" + this.config.iconHum +"</td>" +
-                            "<td class='text' style='font-size: "+this.config.fontSize+";text-align:right;padding-bottom:"+this.config.rowPadding+"'>" + this.humidity + "</td>" +
-                            "</tr>";
+            
+            table.innerHTML = "<tr style='color:"+tempColor+"'>" +
+            "<td class='icon' style='font-size: "+this.config.iconSize+";text-align:left;padding-bottom:"+this.config.rowPadding+"'>" + iconTemp + "</td>" +
+            "<td class='text' style='font-size: "+this.config.fontSize+";text-align:right;padding-bottom:"+this.config.rowPadding+"'>" + this.temp + "</td></tr>" + 
+            "<tr style='color:"+humColor+"'><td class='icon' style='font-size: "+this.config.iconSize+";text-align:left;padding-bottom:"+this.config.rowPadding+"'>" + iconHum +"</td>" +
+            "<td class='text' style='font-size: "+this.config.fontSize+";text-align:right;padding-bottom:"+this.config.rowPadding+"'>" + this.humidity + "</td>" +
+            "</tr>";           
         }
         else
         {
             table.innerHTML = "<tr>" +
-							"<td class='icon' style='font-size: "+this.config.iconSize+";'>" + this.config.iconTemp + "</td>" +
-							"<td class='text' style='font-size: "+this.config.fontSize+";'>" + this.temp + "</td>" + 
-                            "<td class='icon' style='font-size: "+this.config.iconSize+";'>" + this.config.iconHum +"</td>" +
-                            "<td class='text' style='font-size: "+this.config.fontSize+";'>" + this.humidity + "</td>" +
+							"<td class='icon' style='font-size: "+this.config.iconSize+";color:"+tempColor+";'>" + iconTemp + "</td>" +
+							"<td class='text' style='font-size: "+this.config.fontSize+";color:"+tempColor+";'>" + this.temp + "</td>" + 
+                            "<td class='icon' style='font-size: "+this.config.iconSize+";color:"+humColor+";'>" + iconHum +"</td>" +
+                            "<td class='text' style='font-size: "+this.config.fontSize+";color:"+humColor+";'>" + this.humidity + "</td>" +
                             "</tr>";
         }
         
