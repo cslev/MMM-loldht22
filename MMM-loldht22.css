@@ -1,6 +1,6 @@
 .MMM-loldht22 .title {
 	font-weight: bold;
-	font-size: 18px;
+	font-size: 20px;
 }
 
 p {
@@ -21,12 +21,15 @@ td.header_text{
 th {
   text-align:right;
 }
+
 td.text {
   padding-right:2px;
+  padding-top:10px;
   text-align:left;
 }
 td.icon {
   padding-right:0px;
+  padding-top:10px;
   text-align:left;
   /* color:brown; */
 }

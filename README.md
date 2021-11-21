@@ -47,7 +47,12 @@ Note, if you already run MagicMirror in a container, even if you have lol_dht22 
         vertical: false, //horizontal vs. vertical layout
         iconTemp: '<i class="fas fa-thermometer-half"></i>', //fontawesome HTML tag
         iconHum: '<i class="fas fa-tint"></i>', //fontawesome HTML tag
-        iconHome: '<i class="fas fa-house-user"></i>' //fontawesome HTML tag
+        iconHome: '<i class="fas fa-house-user"></i>', //fontawesome HTML tag
+        fontSize: '50px',
+        iconSize: '50px',
+        headerFontSize: '22px',
+        headerIconSize: '22px',
+        rowPadding: '12px' //only makes sense if vertical is true
       }
    },
 ```
@@ -64,6 +69,12 @@ Note, if you already run MagicMirror in a container, even if you have lol_dht22 
 |iconTemp| Temp icon. Change default icons if you want by fontawesome. Default `<i class="fas fa-thermometer-half"></i>`|
 |iconHum| Humidity icon. Change default icons if you want by fontawesome. Default `<i class="fas fa-tint"></i>`|
 |iconHome|: Location icon. Change default icons if you want by fontawesome. Default `<i class="fas fa-house-user"></i>`|
+|fontSize|: Granular CSS setting for the font sizes of humidity and temperature. Default `20px`|
+|iconSize|: Granular CSS setting for the icon sizes of humidity and temperature. Default `20px`|
+|headerFontSize|: Granular CSS setting for the header font size. Default `18px`|
+|headerIconSize|: Granular CSS setting for the header icon size. Default `18px`|
+|rowPadding|: Granular CSS setting for the row padding when layout is vertical. Default `10px`|
+
 
 
 | Layout |  View | 

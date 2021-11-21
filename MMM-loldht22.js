@@ -3,17 +3,21 @@ Module.register("MMM-loldht22",
     app_name:"MMM-loldht22",
     defaults: 
     {
-        header:"DHT22 sensor data",
         sensorLocation: 'Living room',
         showLocation: true,
-        updateInterval: 30, //in minutes -> every 30 minutes
+        updateInterval: 10, //in minutes -> every 30 minutes
         animationSpeed: 1000,
         scriptPath: "./loldht22",
         gpioPin: 7,
         vertical: false, 
         iconTemp: '<i class="fas fa-thermometer-half"></i>', //fontawesome HTML tag
         iconHum: '<i class="fas fa-tint"></i>', //fontawesome HTML tag
-        iconHome: '<i class="fas fa-house-user"></i>' //fontawesome HTML tag
+        iconHome: '<i class="fas fa-house-user"></i>', //fontawesome HTML tag
+        fontSize: '20px',
+        iconSize: '20px',
+        headerFontSize: '18px',
+        headerIconSize: '18px',
+        rowPadding: '10px' //only makes sense if vertical is true
     },
     mylog: function(text)
     {
@@ -46,8 +50,8 @@ Module.register("MMM-loldht22",
         var header = document.createElement("header");
         var name = document.createElement("table");
         name.classList.add("tiny", "table");
-        name.innerHTML =    "<tr><td class='header_icon'>" + this.config.iconHome + "</td>" +
-                            "<td class='header_text'>" + this.config.sensorLocation + "</td></tr>"
+        name.innerHTML =    "<tr><td class='header_icon' style='font-size: "+this.config.headerIconSize+";'>" + this.config.iconHome + "</td>" +
+                            "<td class='header_text' style='font-size: "+this.config.headerFontSize+";'>" + this.config.sensorLocation + "</td></tr>"
         //append header to wrapper
         header.appendChild(name);
         wrapper.appendChild(header);
@@ -56,25 +60,25 @@ Module.register("MMM-loldht22",
         table.classList.add("small", "table");
         if(this.config.vertical)
         {
-            table.innerHTML = '<tr>' +
-							'<td class="icon">' + this.config.iconTemp + '</td>' +
-							'<td class="text">' + this.temp + '</td></tr></tr>' + 
-                            '<td class="icon">' + this.config.iconHum +'</td>' +
-                            '<td class="text">' + this.humidity + '</td>' +
-                            '</tr>';
+            table.innerHTML = "<tr>" +
+							"<td class='icon' style='font-size: "+this.config.iconSize+";text-align:left;padding-bottom:"+this.config.rowPadding+"'>" + this.config.iconTemp + "</td>" +
+							"<td class='text' style='font-size: "+this.config.fontSize+";text-align:right;padding-bottom:"+this.config.rowPadding+"'>" + this.temp + "</td></tr></tr>" + 
+                            "<td class='icon' style='font-size: "+this.config.iconSize+";text-align:left;padding-bottom:"+this.config.rowPadding+"'>" + this.config.iconHum +"</td>" +
+                            "<td class='text' style='font-size: "+this.config.fontSize+";text-align:right;padding-bottom:"+this.config.rowPadding+"'>" + this.humidity + "</td>" +
+                            "</tr>";
         }
         else
         {
-            table.innerHTML = '<tr>' +
-							'<td class="icon">' + this.config.iconTemp + '</td>' +
-							'<td class="text">' + this.temp + '</td>' + 
-                            '<td class="icon">' + this.config.iconHum +'</td>' +
-                            '<td class="text">' + this.humidity + '</td>' +
-                            '</tr>';
+            table.innerHTML = "<tr>" +
+							"<td class='icon' style='font-size: "+this.config.iconSize+";'>" + this.config.iconTemp + "</td>" +
+							"<td class='text' style='font-size: "+this.config.fontSize+";'>" + this.temp + "</td>" + 
+                            "<td class='icon' style='font-size: "+this.config.iconSize+";'>" + this.config.iconHum +"</td>" +
+                            "<td class='text' style='font-size: "+this.config.fontSize+";'>" + this.humidity + "</td>" +
+                            "</tr>";
         }
         
 
-        this.mylog(table)
+        // this.mylog(table)
 	    wrapper.appendChild(table);
         return wrapper;
     },
@@ -99,28 +103,18 @@ Module.register("MMM-loldht22",
     {
         switch(notification) {
             case "SET_SENSOR_DATA":
-                this.mylog("mock node_helper sent back notif SET_SENSOR_DATA");
+                // this.mylog("mock node_helper sent back notif SET_SENSOR_DATA");
                 if (payload == "ERROR")
                 {
                     //temporary reading error - nothing to do, leave sensor data as it is
                     return;
                 }
-                this.mylog("payload:" + payload);
-                // for(var key in payload) 
-                // {
-                //     var value = payload[key];
-                //     console.log(key + ":" + value)
-                // }
-                // this.mylog("retval: " + payload)
+
                 this.temp = payload["temp"];
                 this.temp += ' &#176;C'; //add celsius symbol
 
                 this.humidity = payload["humidity"];
-                // this.humidity = payload
                 this.humidity += ' %'; //add percent symbol
-
-                // this.mylog(this.temp)
-                // this.mylog(this.humidity)
 
                 this.updateDom();
             break;
