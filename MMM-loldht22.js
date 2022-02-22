@@ -30,7 +30,8 @@ Module.register("MMM-loldht22",
         iconSize: '20px',
         headerFontSize: '18px',
         headerIconSize: '18px',
-        rowPadding: '10px' //only makes sense if vertical is true
+        rowPadding: '10px', //only makes sense if vertical is true
+        debug: true
     },
     
 
@@ -43,7 +44,11 @@ Module.register("MMM-loldht22",
     //This function will be executed when your module is loaded successfully.
     start: function () 
     {
-        this.mylog("Starting (layout vertical: " + this.config.vertical + ")");
+        if(this.config.debug)
+        {
+            this.mylog("Starting (layout vertical: " + this.config.vertical + ")");
+        }
+        
         this.loaded = false;
         this.humidity = "reading...";
         this.temp = "reading...";
@@ -89,7 +94,10 @@ Module.register("MMM-loldht22",
             if(temp > parseInt(this.config.freezeTempStartsAt))
             {
                 iconTemp = this.config.freezeTempIcon;
-                this.mylog("temperature is Freezing -->" + temp);
+                if(this.config.debug)
+                {
+                    this.mylog("temperature is Freezing -->" + temp);
+                }
                 if(this.config.colored)
                 {
                     // iconTemp = this.freezeTempIconColored
@@ -102,7 +110,10 @@ Module.register("MMM-loldht22",
                 if(temp > parseInt(this.config.lowTempStartsAt))
                 {
                     iconTemp = this.config.lowTempIcon;
-                    this.mylog("temperature is Low -->" + temp);
+                    if(this.config.debug)
+                    {
+                        this.mylog("temperature is Low -->" + temp);
+                    }
                     if(this.config.colored)
                     {
                         // iconTemp = this.lowTempIconColored
@@ -112,7 +123,10 @@ Module.register("MMM-loldht22",
                     if(temp > parseInt(this.config.mediumTempStartsAt))
                     {
                         iconTemp = this.config.mediumTempIcon;
-                        this.mylog("temperature is Medium -->" + temp);
+                        if(this.config.debug)
+                        {
+                            this.mylog("temperature is Medium -->" + temp);
+                        }
                         if(this.config.colored)
                         {
                             // iconTemp = this.mediumTempIconColored
@@ -122,7 +136,10 @@ Module.register("MMM-loldht22",
                         if(temp > parseInt(this.config.highTempStartsAt))
                         {
                             iconTemp = this.config.highTempIcon;
-                            this.mylog("temperature is HIGH -->" + temp);
+                            if(this.config.debug)
+                            {
+                                this.mylog("temperature is HIGH -->" + temp);
+                            }
                             if(this.config.colored)
                             {
                              //   iconTemp = this.highTempIconColored

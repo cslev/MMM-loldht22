@@ -28,10 +28,11 @@ module.exports = NodeHelper.create(
     },
     socketNotificationReceived: function(notification, config) 
     {
-        var path = config.scriptPath
-        var pin = config.gpioPin
+        var path = config.scriptPath;
+        var pin = config.gpioPin;
+        var debug = config.debug;
         //console.log(path + ' ' + pin)
-        var results = ""
+        var results = "";
         var temp = '';
         var hum = '';
 
@@ -42,21 +43,34 @@ module.exports = NodeHelper.create(
                 exec(path + " " + pin, (error, stdout, stderr) => {
                     if (error) {
                         console.error(`exec error: ${error}`);
-                        console.error(stderr)
-                        this.sendSocketNotification("SET_SENSOR_DATA", "ERROR")
+                        console.error(stderr);
+                        this.sendSocketNotification("SET_SENSOR_DATA", "ERROR");
                         return;
                     }
-                    console.log(`stdout: ${stdout}`);
+                    if(debug)
+                    {
+                        console.log(`${stdout}`);
+                    }
                     results = stdout.toString().split("=");
-                    console.log(results)
-                    hum = results[1].split(' ')[1]
-                    temp = results[2].split(' ')[1]
-                    console.log("Hum:" + hum)
-                    console.log("Temp:" + temp)
-                    retVal["humidity"] = hum
-                    retVal["temp"] = temp
-                    console.log(retVal)
-                    this.sendSocketNotification("SET_SENSOR_DATA", retVal)
+                    if(debug)
+                    {
+                        console.log(results);
+                    }
+                    
+                    hum = results[1].split(' ')[1];
+                    temp = results[2].split(' ')[1];
+                    if(debug)
+                    {
+                        console.log("Hum:" + hum);
+                        console.log("Temp:" + temp);    
+                    }
+                    retVal["humidity"] = hum;
+                    retVal["temp"] = temp;
+                    if(debug)
+                    {
+                        console.log(retVal);
+                    }
+                    this.sendSocketNotification("SET_SENSOR_DATA", retVal);
                 });
                 // this.mylog("node_helper is doing its job:" + (this.countDown - payload).toString())
                 //console.log("node_helpre is working")

@@ -65,7 +65,8 @@ Note, if you already run MagicMirror in a container, even if you have lol_dht22 
         iconSize: '50px',
         headerFontSize: '22px',
         headerIconSize: '22px',
-        rowPadding: '12px' //only makes sense if vertical is true
+        rowPadding: '12px', //only makes sense if vertical is true
+        debug: false //setup whether you want debug info in console
       }
    },
 ```
@@ -98,7 +99,7 @@ Note, if you already run MagicMirror in a container, even if you have lol_dht22 
 |headerFontSize|: Granular CSS setting for the header font size. Default `18px`|
 |headerIconSize|: Granular CSS setting for the header icon size. Default `18px`|
 |rowPadding|: Granular CSS setting for the row padding when layout is vertical. Default `10px`|
-
+|debug|: If you want debug messages in the console / docker logs. Default: `true`|
 
 | Layout |  View | 
 |---|---|
